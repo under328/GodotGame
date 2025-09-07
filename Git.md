@@ -26,7 +26,8 @@
 - 提交到本地库 ———— git commit -m "feat：提交代码"
 - 创建分支（第一次） ———— git branch -M main
 - 链接仓库（第一次） ———— git remote add origin https://github.com/under328/hollow-knight-pixel.git
-- 提交代码到分支 ———— git push -u origin main
+- 关联并提交代码到分支（第一次） ———— git push -u origin main
+- 提交代码 ———— git push
 #### 克隆项目
 - git clone https://github.com/under328/hollow-knight-pixel.git
 #### 日志类型
