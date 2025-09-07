@@ -5,6 +5,7 @@
 - 查看本地库状态 ———— git status
 - 添加到暂存区 ———— git add .
 - 提交到本地库 ———— git commit -m "feat:日志信息"
+- 添加并提交到本地库 ———— git commit -am "feat:日志信息"
 - 查看历史记录 ———— git reflog/git log
 - 版本穿梭 ———— git reset --hard 版本号
 #### 分支操作
