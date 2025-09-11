@@ -24,6 +24,9 @@
 - [:-:] 将表头及单元格内容居中
 
 #### 图片
+
+<img src="head.jfif" width=60 height=60  />
+
 - 对齐
 ```
 ![img](URL#pic_center)
@@ -40,4 +43,3 @@
 ```HTML
 <img src=URL width=60 height=60  />
 ```
-![img](head.jfif =60x60)
