@@ -1,6 +1,6 @@
 |NAME|SYMBOL|EXAMPLE|key|
 |:-:|:-:|:-:|:-:|
-|标题|#|Title|
+|标题|#|Title|Ctrl + 1|
 |斜体|*|*text*|Ctrl + I|
 |粗体|**|**text**|Ctrl + B|
 |斜粗体|***|***text***|
@@ -14,6 +14,8 @@
 |有序列表|1.|1. list|
 |无序列表|-|- list|
 |链接|[name](link)|[百度](https://www.baidu.com)|
+|表格||Typora|Ctrl + T|
+|导入|PDF、HTML等|Typora|Ctrl + Shift + E|
 
 ***
 
@@ -27,6 +29,7 @@
 
 <img src="head.jfif" width=60 height=60  />
 
+- Ctrl + Shift + I（Typora）
 - 对齐
 ```
 ![img](URL#pic_center)
