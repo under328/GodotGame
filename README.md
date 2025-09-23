@@ -7,15 +7,16 @@
 |横杠|***|——————————|
 |删除线|~~|~~text~~|
 |下划线|\<u\>|__|
-|引用|>|
+|引用|>||Ctrl + Q|
 |脚注|[^2]|O²|
 |代码|`|`print("Hello World")`|
-|多行代码|```|Ctrl + K|
-|有序列表|1.|1. list|
-|无序列表|-|- list|
-|链接|[name](link)|[百度](https://www.baidu.com)|
+|多行代码|```|```python|Ctrl + K|
+|有序列表|1.|1. list|Ctrl + O|
+|无序列表|-|- list|Ctrl + U|
+|链接|[name](link)|[百度](https://www.baidu.com)|Ctrl + L|
 |表格||Typora|Ctrl + T|
 |导入|PDF、HTML等|Typora|Ctrl + Shift + E|
+|图片|![img](URL)||Ctrl + G|
 
 ***
 
@@ -29,7 +30,7 @@
 
 <img src="head.jfif" width=60 height=60  />
 
-- Ctrl + Shift + I（Typora）
+- Ctrl + G
 - 对齐
 ```
 ![img](URL#pic_center)
@@ -45,4 +46,7 @@
 ```
 ```HTML
 <img src=URL width=60 height=60  />
+```
+```python
+print("h")
 ```
