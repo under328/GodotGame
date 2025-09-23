@@ -47,6 +47,3 @@
 ```HTML
 <img src=URL width=60 height=60  />
 ```
-```python
-print("h")
-```
