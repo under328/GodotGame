@@ -10,7 +10,7 @@
 |引用|>|
 |脚注|[^2]|O²|
 |代码|`|`print("Hello World")`|
-|多行代码|```||
+|多行代码|```|Ctrl + K|
 |有序列表|1.|1. list|
 |无序列表|-|- list|
 |链接|[name](link)|[百度](https://www.baidu.com)|
