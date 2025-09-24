@@ -90,3 +90,84 @@ finally
 // 最后执行的代码，有没有出错都执行
 }
 ```
+
+- 逻辑运算优先级
+! > && > ||
+- 短路运算
+```
+// || 有真则真，左边为true 右边停止计算
+int i = 1
+bool result = true || ++i    //i == 1
+// && 有假则假，左边为false 右边停止计算
+result = false && ++i    //i == 1
+```
+
+#### 位运算符
+将数值转换为二进制，进行位运算
+位与&   位或|   异或^   位取反~   左移<<   右移>>
+~先补全所有0再取反，包括符号位
+左移几位 右侧加几个0
+右移几位 右侧去掉几个数
+```
+a = 5;   //101
+b = a << 1;   //1010
+c = a << 2;   //10100
+d = a >> 1;   //10
+e = a >> 2;   //1
+```
+
+#### 三目运算符
+`string str = true ? "真" : "假"`
+
+do while 循环至少循环一次实例
+
+### C#基础
+#### 枚举
+**枚举多配合switch使用**
+枚举一般声明在namespace语句块
+也可以声明在class、struct语句块
+注意：枚举不能在函数语句块中声明
+```
+using System;
+
+public class EnumTest
+{
+    enum Day { Sun, Mon, Tue, Wed, Thu, Fri, Sat };
+
+    static void Main()
+    {
+        **Day today = Day.Sat;**   // 枚举
+        int x = (int)Day.Sun;   //枚举转int
+        string str = today.ToString();   //枚举转String   "Sat"
+        //string转枚举
+        //Parse 第一个参数：要转为哪个枚举类型， 第二个参数：需要转换的字符串
+        //转换后是通用类型，需要使用括号强转为我们想要的枚举类型
+        string str1 = "Sat"
+        today = (Day)Enum.Parse(typeof(Day), str1)
+        Console.WriteLine("Sun = {0}", x);   //Sun = 0
+    }
+}
+```
+
+#### 数组
+数组是一个存储相同类型元素的固定大小的顺序集合。
+数组的声明：
+double[] balance = { 2340.0, 4523.69, 3421.0};
+balance.Length   //3
+balance[2]   //3421.0
+balance[2] = 3421.8
+声明 遍历 增删改查
+**Array 类的属性**
+二维数组
+行优先存储
+```
+int [,] a = new int [3,4] {
+ {0, 1, 2, 3} ,   /*  初始化索引号为 0 的行 */
+ {4, 5, 6, 7} ,   /*  初始化索引号为 1 的行 */
+ {8, 9, 10, 11}   /*  初始化索引号为 2 的行 */
+};
+```
+array.GetLength(0)   //行
+array.GetLength(1)   //列
+#### 列表
+#### 字典
