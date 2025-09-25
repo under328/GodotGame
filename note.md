@@ -207,3 +207,52 @@ struct Student
 Student s1 = new Student("jack", 18);
 s1.Speak();
 ```
+
+#### 排序
+冒泡排序
+两两相邻、不停比较、不停交换、比较m轮
+```
+int[] arr = {8, 7, 1, 5, 4, 2, 6, 3, 9}
+for (int m = 0; m < arr.Length; m++)
+{
+    bool isSort = false;
+    for (int n = 0; n < arr.Length -1 - m; n++)
+    {
+        if (arr[n] > arr[n + 1])
+        {
+            isSort = true;
+            int temp = arr[n];
+            arr[n] = arr[n + 1];
+            arr[n + 1] = temp;
+        }
+    }
+    // 当一轮结束后,已排序完成，退出循环
+    if( !isSort )
+    {
+        break;
+    }
+}
+```
+
+选择排序
+新建中间商、依次比较、找出极值、放入目标位置、比较n轮
+```
+int[] arr = {8, 7, 1, 5, 4, 2, 6, 3, 9}
+int index = 0;
+for (int m = 0; m < arr.Length; m++)
+{
+    for (int n = 1; n < arr.Length - m ; n++)
+    {
+        if(arr[index] < arr[n])
+        {
+            index = n;
+        }
+    }
+    if( index != arr.Length - 1 - m )
+    {
+        int temp = arr[index];
+        arr[index] = arr[arr.Length - 1 - m];
+        arr[arr.Length - 1 - m ] = temp;
+    }
+}
+```
