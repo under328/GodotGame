@@ -173,14 +173,14 @@ array.GetLength(1)   //列
 #### 字典
 
 #### 访问修饰符
-public 公共的
-private 私有的（默认）
+public 公共的，外边内部都可访问
+private 私有的（默认），内部才能访问
+protected 保护的，内部和子类可以访问
 #### 结构体struct
 ```
 using System;
 
 struct Student
-{
     // 变量
     1、结构体申明的变量不能直接初始化，只能在外边或函数中赋值
     public string name;
@@ -256,3 +256,35 @@ for (int m = 0; m < arr.Length; m++)
     }
 }
 ```
+
+#### 类和对象
+类一般声明在namespace语句块
+同一语句块中类不能重名
+```
+class Person
+{
+    //成员变量
+    //1、用来描述对象的特征
+    //2、是否赋值根据需求来定
+
+    public string name;
+    public int age;
+
+    //成员方法
+    //1、用来描述对象的行为
+    //2、成员方法不要加static关键字
+    public void Speak()
+    {
+        Console.WriteLine("my name is {0}", name);
+    }
+}
+```
+```
+Person p = new Person();
+p.Speak();
+```
+
+
+构造函数
+析构函数
+
