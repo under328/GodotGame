@@ -171,3 +171,39 @@ array.GetLength(0)   //行
 array.GetLength(1)   //列
 #### 列表
 #### 字典
+
+#### 访问修饰符
+public 公共的
+private 私有的（默认）
+#### 结构体struct
+```
+using System;
+
+struct Student
+{
+    // 变量
+    1、结构体申明的变量不能直接初始化，只能在外边或函数中赋值
+    public string name;
+    public int age;
+
+    // 结构声明
+    1、没有返回值
+    2、函数名必须与结构体相同
+    3、必须有参数
+    4、如果申明了构造函数 那么必须在其中对所有变量数据初始化
+    public Student(string name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+    // 函数方法
+    public void Speak()
+    {
+        Console.WriteLine("my name is {0}", this.name)
+    }
+}
+```
+```
+Student s1 = new Student("jack", 18);
+s1.Speak();
+```
