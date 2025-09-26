@@ -358,7 +358,115 @@ class Person
 GC.Collect();
 ```
 
+***
 
-**继承**
+**成员属性**
+基本概念
+1、用于保护成员变量
+2、为成员属性的获取和赋值添加逻辑处理
+3、解决3P的局限性
+ public-内外访问
+ private-内部访问
+ protected-内部和子类访问
+ 属性能让成员变量在外部（只能获取不能修改、只能修改不能获取）
 
-**多态**
+ get、set添加访问修饰符
+ 1、默认为属性的访问权限
+ 2、需要低于属性的访问权限
+ 3、不能get、set同时都低于属性的访问权限
+```
+class Person
+{
+    private string name;
+
+    //属性命名一般使用 帕斯卡命名法
+    public string Name
+    {
+        private get   //可添加逻辑处理、加密处理
+        {
+            return name;
+        }
+        set   //可添加逻辑处理、加密处理
+        // value 表示外部传入的值
+        {
+            name = value;
+        }
+    }
+}
+```
+自动属性
+作用：外部能得不能改
+```
+public float Height
+{
+    get;
+    private set;
+}
+```
+
+索引器
+概念：索引器让对象可以像数组一样，通过索引访问其元素
+索引器可以重载
+```
+class Person
+{
+    private string name;
+    private Person[] friends;
+
+    // 索引器
+    // 访问修饰符 返回值 this[参数列表]
+    public Person this[int index]
+    {
+        get
+        {
+            if(friends == null || friends.Length - 1 < index)   //索引超出范围返回null
+                {
+                    return null;
+                }
+            return friends[index];
+        }
+        set
+        {
+            friends[index] = value;
+        }
+    }
+}
+```
+```
+Person p = new Person();
+p[0] = new Person();   //通过索引给p添加friends
+```
+
+**静态成员 static**
+特点：
+1、直接用 [类名.] 使用（成员变量需要new才能使用，static可以直接使用）
+2、静态成员在程序开始运行时，就会分配内存空间（成员变量实例化时才会分配内存）
+3、同生共死，直到程序结束才会被释放
+4、静态函数中不能使用非静态成员（因为 非静态成员 还未分配内存空间）
+```
+class Test
+{
+    public int age = 18;
+    public static float PI = 3.1415926535789f;
+}
+
+Test.PI;
+
+Test t = new Test();
+t.age;
+```
+
+常量和静态变量
+相同点：
+都可以通过 [类名.] 使用
+不同点：
+1、const必须初始化，不能修改   static没有这个规则
+2、const只能修饰变量；static可以修饰很多
+3、const一定是写在访问修饰符后面的；static没有这个要求
+```
+class Test
+{
+    public const float = 9.8f; // 必须初始化不能修改
+    static public float PI = 3.1415926535789f;
+}
+```
