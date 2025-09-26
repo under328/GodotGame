@@ -286,8 +286,7 @@ p.Speak();
 ```
 
 
-构造函数
-用来初始化
+构造函数（初始化）
 1、没有返回值
 2、函数名和类名必须相同
 3、没有特殊需求时 一般都是public
@@ -317,7 +316,7 @@ class Person
 }
 ```
 
-析构函数（了解）
+析构函数（释放时）
 在垃圾回收时，才会调用的函数
 ```
 ~Line() //析构函数
@@ -543,8 +542,116 @@ int i = 10;
 i.SpeakValue();   // i == 11
 ```
 
-**运算符重载**
+**运算符重载 operator**
+作用：
+让自定义类和结构体，能够使用运算符进行运算
 
+特点：
+1、一定是公共的静态方法
+2、返回值写在operator前
+3、逻辑处理自定义
 
+注意：
+1、条件运算符需要成对实现
+2、一个返回可以多个重载
+3、不能使用ref和out
 
+语法：public static 返回类型 operator 运算符（参数列表）
+```
+class Point
+{
+    public int x;
+    public int y;
+
+    public static Point operator +(Point p1, Point p2)
+    {
+        Point p = new Point();
+        p.x = p1.x + p2.x;
+        p.y = p1.y + p2.y;
+        return p;
+    }
+}
+```
+
+可重载的运算符：
+算术运算符
+逻辑运算符 ！
+位运算符
+条件运算符（有>就要写<）
+
+不可重载的运算符：
+逻辑运算符 && ||
+索引符 []
+强转运算符 ()
+特殊运算符
+点.   三目运算符 ? :   赋值符号 =
+
+**内部类和分部类(了解)**
+内部类
+概念：在一个类中申明一个类
+特点：使用时要用包裹着点出自己
+作用：亲密关系的表现
+注意：访问修饰符作用很大
+
+```
+class Person
+{
+    public string name;
+    public int age;
+    public Body body;
+
+    public class Body
+    {
+        
+    }
+{
+
+}
+}
+```
+```
+Person p = new Person();
+Person.Body body = new Person.Body();
+```
+
+分部类 partial
+概念：把一个类分成几部分申明
+作用：分部描述一个类，增加程序的拓展性
+注意：
+分部类可以写在多个脚本中
+分部类的访问修饰符要一致
+分部类中不能有重复成员
+
+```
+partial class Student
+{
+    public string name;
+}
+partial class Student
+{
+    public int age;
+}
+```
+
+分部方法（了解）
+概念：将方法的申明和实现分离
+特点：
+1、不能加访问修饰符 默认所有
+2、只能在分部类中申明
+3、返回值只能是void
+4、可以有参数但不用 out关键字
+
+```
+partial class Student
+{
+    partial void Speak();   //申明函数
+}
+partial class Student
+{
+    partial void Speak()
+    {
+        //实现逻辑
+    }
+}
+```
 
