@@ -833,9 +833,71 @@ static、protected修饰    不能        可以
 
 ## C#进阶
 
-### 数据集合
-Arraylist数组列表
-Stack栈
+### 数据结构
+#### ArrayList数组列表
+Arraylist是C#为我们封装好的类
+本质是一个object数组（优点什么都可以装，但存在装箱拆箱导致的内存消耗）
+
+```
+//需要引用命名空间System.Collections
+using System.Collections;
+
+ArrayList array = new ArrayList();
+
+//增
+array.Add(2);
+array.Add("二");
+//插入
+array.Insert(1, "789")
+//把另一个list容器的内容加在后面
+array.AddRange(array2);
+
+//删
+//删除指定元素
+array.Remove("二");   //删除第一个 "二"
+//删除指定位置的元素
+array.RemoveAt(2);   //删除索引为2的元素
+//清空
+array.Clear();
+
+//查
+array[0];
+//查看元素是否存在
+array.Contains("123");   //返回值为bool
+//正向查元素位置
+array.IndexOf("123");   //返回 第一个元素的索引
+//反向查元素位置
+array.LastIndexOf("123");   //返回 最后一个元素的索引
+
+//改
+array[0] = 999
+```
+
+**遍历**
+//长度
+array.Count
+//容量
+array.Capacity
+```
+forEach ( object item in array )
+{
+
+}
+```
+
+**装箱拆箱**
+因为Arraylist本质上是一个自动扩容的object数组，所以存在装箱拆箱，存在内存消耗
+int i = 1;
+array[0] = i;   //装箱
+
+i = (int)array[0];   //拆箱
+
+#### Stack栈
+
+
+
+
+
 Queuq队列
 Hashtable哈希表
 
