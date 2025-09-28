@@ -834,7 +834,8 @@ static、protected修饰    不能        可以
 ## C#进阶
 
 ### 数据结构
-#### ArrayList数组列表
+
+#### ArrayList-数组列表
 Arraylist是C#为我们封装好的类
 本质是一个object数组（优点什么都可以装，但存在装箱拆箱导致的内存消耗）
 
@@ -892,14 +893,190 @@ array[0] = i;   //装箱
 
 i = (int)array[0];   //拆箱
 
-#### Stack栈
+#### Stack栈-先进后出
+Stack是C#为我们封装好的类
+本质是一个object数组，只是封装了特殊的存储规则
+
+Stack是栈存储容器，栈是一种 **先进后出** 的数据结构
+先存入的数据后获取，后存入的数据先获取
+
+```
+//需要引用命名空间System.Collections
+using System.Collections;
+
+Stack s = new Stack();
+
+//增
+// 压栈
+s.Push("123");   //添加在最后一位
+s.Push(2);
+
+//取
+object o = s.Pop();   //取出最后一个
+
+//查
+//只能查看栈顶的内容
+object o = s.Peek();   //查看栈顶内容
+//查看元素是否在栈中
+s.Contains("123")   //返回bool
+
+//改
+//不能修改，只能清空
+s.Clear();
+```
+
+**遍历**
+//长度
+s.Count
+
+```
+//forEach循环
+forEach ( object item in s )
+{
+    //顺序从栈顶到栈底
+}
+
+//转换成object数组后for循环遍历
+object[] array = s.ToArrat();
+
+//循环弹栈
+while(s.Count > 0)
+{
+    object o = s.Pop();
+}
+```
+
+**装箱拆箱**
+同Arraylist
+
+#### Queuq队列-先进先出
+Queuq是C#为我们封装好的类
+本质是一个object数组，只是封装了特殊的存储规则
+
+Queuq是一种 **先进先出** 的数据结构
+先存入的数据先获取，后存入的数据后获取
+
+```
+//需要引用命名空间System.Collections
+using System.Collections;
+
+Queuq q = new Queuq();
+
+//增
+q.Enqueue("123");   //添加在最后一位
+q.Enqueue(2);
+
+//取
+object o = q.Dequeue();   //取出队列第一位
+
+//查
+//查看队列头部元素
+object o = q.Peek();
+//查看元素是否在队列中
+q.Contains("123")   //返回bool
+
+//改
+//不能修改，只能清空
+q.Clear();
+```
+
+**遍历**
+//长度
+q.Count
+
+```
+//forEach循环
+forEach ( object item in q )
+{
+    //顺序从第一个到最后一个
+}
+
+//转换成object数组后for循环遍历
+object[] array = q.ToArrat();
+
+//循环出列
+while(q.Count > 0)
+{
+    object o = q.Dequeue();
+}
+```
+
+**装箱拆箱**
+同Arraylist
+
+#### Hashtable哈希表
+Hashtable（又称散列表） 是基于健的哈希代码组织起来的 **键值对**
+
+```
+//需要引用命名空间System.Collections
+using System.Collections;
+
+Hashtable h = new Hashtable();
+
+//增
+//不能出现相同的健
+h.Add("健", "值");
+h.Add(x, 1);
+
+//删
+//只能通过健来删除
+h.Remove(x);
+//清空
+h.Clear();
+
+//查
+//通过健查看值
+object o = h[x];   //找不到返回空
+//查看 健 是否存在
+h.Contains(x)  == h.ContainsKey(x);    //返回bool
+//查看 值 是否存在
+h.ContainsValue(1);
+
+//改
+//只能改健对应的值，不能改健
+h[x] = 2;
+```
+
+**遍历**
+//长度
+h.Count
+
+```
+//forEach循环 健
+forEach ( object item in h.Keys )
+{
+    h[item];
+}
+//forEach循环 值
+forEach ( object item in h.Values )
+{
+    item;
+}
+//forEach循环 健值对
+forEach ( DictionaryEntry item in h )
+{
+    item.Key;
+    item.Value;
+}
+
+//迭代器遍历(了解)
+IDictionaryEnumerator myEnumerator = h.GetEnumerator();
+bool flag = myEnumerator.MoveNext();
+while (flag)
+{
+    myEnumerator.Key;
+    myEnumerator.Value;
+    flag = myEnumerator.MoveNext();
+}
+```
+
+**装箱拆箱**
+同Arraylist
 
 
 
 
 
-Queuq队列
-Hashtable哈希表
 
 
 ### 泛型相关
