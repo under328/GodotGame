@@ -655,3 +655,90 @@ partial class Student
 }
 ```
 
+***
+
+#### String
+string 关键字是 System.String 类的别名
+
+**字符串切割**
+```
+string str = "1, 2, 3, 4, 5, 6";
+string[] strs = tr.Split(",");   // [1, 2, 3, 4, 5, 6]
+```
+
+**字符获取**
+```
+//字符串的本质是一个char数组
+string str = "123";
+char c1 = str[0];   // "1"
+//转为char数组
+char[] chars = str.ToCharArray();
+char c2 = chars[1];   // "2" 
+```
+
+**字符串拼接**
+```
+str = string.Format("{0}{1}", "1", 2)   // "12"
+```
+
+**获取字符位置**
+IndexOf
+```
+string str = "123";
+// 找到返回索引
+int index1 = str.IndexOf("2");   // 1
+// 为找到返回-1
+int index2 = str.IndexOf("5");   // -1
+```
+
+LastIndexOf
+```
+string str = "123123";
+// 找到返回索引
+int index1 = str.LastIndexOf("23");   // 4
+// 为找到返回-1
+int index2 = str.LastIndexOf("56");   // -1
+```
+
+**移除字符**
+```
+string str = "123456";
+
+// 移除索引2后的字符，包含索引2
+string str1 = str.Remove(2);   //"12"
+
+// 执行两个参数移除
+// arg1:开始位置   arg2：字符个数
+string str2 = str.Remove(2,2);   //"1256"
+```
+
+**字符串截取**
+```
+string str = "123456";
+
+// 截取中指定位置开始之后的字符串，包含索引2，其他部分删除
+string str1 = str.Substring(2);   //"3456"
+
+// 执行两个参数移除
+// arg1:开始位置   arg2：字符个数
+string str2 = str.Substring(2);   //"34"
+```
+
+**替换字符**
+```
+string str = "12345634";
+
+// arg1:oldValue   arg2：newValue
+string str1 = str.Replace("34", "78");   //"12785678"
+```
+
+**大小写转换**
+```
+string str = "abCD";
+
+// 转大写ToUpper
+string str1 = str.ToUpper();   //"ABCD"
+
+// 转小写ToLower
+string str2 = str.ToLower();   //"abcd"
+```
