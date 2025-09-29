@@ -1388,11 +1388,17 @@ Func<string> funcString = Fun3;
 Func<string, int> funcString = Fun4;   //参数为string，返回值为int
 ```
 
+#### 事件event
+事件是基于委托的存在，是委托的安全包裹
+事件是一种特殊的变量类型
+
+事件不能在类外部 赋值、调用
+```
+
+```
 
 
 
-
-#### 事件
 
 #### 匿名函数
 
