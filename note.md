@@ -1084,10 +1084,213 @@ while (flag)
 泛型约束
 List列表
 Dictionary字典
-顺序存储和链式存储
-Linkedlist链表
 
+***
 
+#### 顺序存储和链式存储
+**数据结构**
+数据结构是计算机存储、组织数据的规则
+数据结构是指相互之间存在一种或多种特定关系的数据元素集合
+例如：自定义一个类，也可以称为一种数据结构-自己定义的数据组合规则
+常用的数据结构：数组、栈、队列、链表、树、图、堆、散列表...
+
+**线性表**
+线性表是一种数据结构，是由n个具有相同特性数据元素组成的有限序列
+例如：数组、ArrayList、Stack、Queue、链表...
+
+**顺序存储**
+顺序存储是用一组**地址连续的存储单元**依次存储线性表的各种元素
+例如：数组、ArrayList、List、Stack、Queue
+
+**链式存储**
+链式存储是用一组**任意的存储单元**存储线性表中的各种元素（通过链来连接数据，不需要扩容不会产生额外垃圾）
+例如：单向链表、双向链表、循环链表
+
+```
+//单向链表节点
+class LinkedNode<T>
+{
+    //数据的值
+    public T value;
+    //下一个元素（钩子）
+    public LinkedNode<T> nextNode;
+
+    //构造函数
+    public LinkedNode(T value)
+    {
+        this.value = value;
+    }
+}
+//单向链表类 （管理节点、添加、删除等逻辑）
+class LinkedList<T>
+{
+    //定义头节点
+    public LinkedNode<T> head;
+    //定义尾部节点
+    public LinkedNode<T> last;
+
+    //添加
+    public void Add(T value)
+    {
+        LinkedNode<T> node = new LinkedNode(T value);
+        if(head == null)
+        {
+            head = node;
+            last = node;
+        }
+        else
+        {
+            last.nextNode = node;
+            last = node;
+        }
+    }
+
+    //删除
+public void Remove(T value)
+{
+    if(head == null)
+    {
+        return;
+    }
+    else if (head.value.Equals(value))
+    {
+        head = head.nextNode;
+        //如果只有一个节点，尾也要清空
+        if(head == null)
+        {
+            last = null;
+        }
+        return; 
+    }
+    //定义一个临时node，和链表所有元素进行比较
+    LinkedNode<T> node = head;
+while(node.nextNode != null)
+{
+    if(node.nextNode.value.Equals(value)
+    {
+        //让自己上一个节点 指向 自己的下一个节点（相当于删除自己）
+        node.nextNode = node.nextNode.nextNode;
+        break;
+    }
+}
+}
+
+}
+```
+```
+//通过new生成的数据，存储位置不确定
+LinkedNode<int> node1 = new LinkedNode<int>(1);
+LinkedNode<int> node2 = new LinkedNode<int>(2);
+node1.nextNode = node2;
+node2.nextNode = new LinkedNode<int>(3);
+
+//使用Add、Remove
+LinkedLink<int> link = new LinkedLink<int>();
+link.Add(1);
+link.Add(2);
+link.Add(3);
+Link.Remove(2);
+
+//循环链表
+LinkedNode<int> node = Link.head;
+while(node != null)
+{
+    Console.WriteLine(node);
+    node = node.nextNode;
+}
+```
+
+**顺序存储和链式存储优缺点**
+链式存储计算上优于顺序存储：
+增加、删除时不需要扩容或移动到新容器
+顺序存储计算上优于链式存储：
+查找、修改时数组可以直接通过下标得到元素，链表需要遍历
+
+#### Linkedlist链表
+Linkedlist是一个C#为我们封装好的类
+本质是一个**可变类型的泛型双向链表**
+
+Value 值
+Previous 上一个节点
+Next 下一个节点
+
+```
+//需要引用命名空间System.Collections.Generic
+using System.Collections.Generic;
+
+Linkedlist<int> link = new Linkedlist<int>();
+
+//增
+//尾部添加
+link.AddLast(1);
+link.AddLast(2);
+//头部添加
+link.AddFirst(0);   //0 -> 1 -> 2
+//节点后添加
+link.AddAfter(node, 10);
+//节点前添加
+link.AddBefore(node, 5);
+
+//删
+//移除头节点
+link.RemoveFirst();
+//移除尾节点
+link.RemoveLast();
+//移除指定节点
+link.Remove(1);
+//清空
+link.Clear();
+
+//查
+//头节点
+LinkedlistNode<int> first = link.First;
+//尾节点
+LinkedlistNode<int> last = link.Last;
+//找到指定值的节点
+LinkedlistNode<int> node = link.Find(2);
+//判断是否存在
+link.Contains(1);
+
+//改
+//先得到节点，再通过value来改
+LinkedlistNode<int> node = link.Find(2);
+node.value = 2;
+```
+
+**遍历**
+```
+//forEach循环
+forEach ( int item in link )
+{
+    item;   //取出的不是节点，直接是值
+}
+
+//通过节点遍历
+//从头到尾
+LinkedlistNode<int> node = link.First;
+while(newHead != null)
+{
+    Console.WriteLine(node.value);
+    node = node.Next;
+}
+
+//从尾到头
+LinkedlistNode<int> node = link.Last;
+while(newHead != null)
+{
+    Console.WriteLine(node.value);
+    node = node.Previous;
+}
+```
+
+#### 泛型栈和队列
+需要引用命名空间System.Collections.Generic
+和Stack和Queue一样
+
+```
+Stack<int> s = new Stack<int>();
+Queue<int> q = new Queue<int>();
+```
 
 ### 委托事件
 委托
@@ -1096,7 +1299,7 @@ Linkedlist链表
 
 匿名函数
 
-Lambad表达式
+#### Lambad表达式
 
 List排序
 
