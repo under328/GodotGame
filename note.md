@@ -1293,17 +1293,100 @@ Queue<int> q = new Queue<int>();
 ```
 
 ### 委托事件
-#### 委托
+#### 委托delegate
 概念
 委托是函数的容器，可以理解为表示函数的变量类型
 用来 存储、传递函数
 委托本质是一个类，用来定义函数的类型（返回值和参数的类型）
 不同的 函数必须对应和各自"格式"一致的委托
+例如：作为类的成员、函数的参数
+```
+//无参无返回值
+delegate void MyFun1();
+//有参有返回值
+delegate int MyFun2(int i);
+```
+```
+static void Fun()
+{
+
+}
+//专门用来装载函数的容器
+MyFun1 f1 = new MyFun1(Fun);
+MyFun1 f2 = Fun;   //简写
+//使用被装载的函数
+f1.Invoke();
+f2();   //简写
+
+//有参
+MyFun2 f3 = Fun;
+f3(5);
+```
+
+```
+//
+class Test
+{
+    public MyFun fun;
+    public MyFun2 fun2;
+
+    public void TestFun(MyFun fun, MyFun2 fun2)
+    {
+        //先处理一些其他逻辑，处理完后 再执行传入的函数
+        Console.WriteLine("123");
+        int i = 1 + 2 + 3
+        i += 2
+        //fun();
+        //fun2(i);
+        this.fun = fun;
+        this.fun2 = fun2;
+    }
+}
+```
+
+**多播委托**
+委托变量可以存储多个函数
+
+```
+MyFun f = Fun1;
+f += Fun2;   // 使用 += -= 添加、删除函数
+f -= Fun2;
+f = null;   //清空
+f();   //先执行Fun1再执行Fun2
+```
+
+**系统定义好的委托**
+
+Action   无返回值
+Func     有返回值
 
 
+//无参无返回值的委托
+```
+Action a = Fun1;
+a += Fun2;
+a();
+```
+//有参无返回值的委托
+```
+Action<int, string> a = Fun1
+a(10, "10");
+```
 
+//泛型委托
+//无参有返回值
+```
+static string Fun3()
+{
+    return "";
+}
 
+//返回值类型为string
+Func<string> funcString = Fun3;
 
+//有参有返回值--arg1~16 -> 参数；last arg -> 返回值
+Func<string, int> funcString = Fun4;   //参数为string，返回值为int
+```
 
 
 
