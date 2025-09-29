@@ -1389,29 +1389,260 @@ Func<string, int> funcString = Fun4;   //参数为string，返回值为int
 ```
 
 #### 事件event
+概念
 事件是基于委托的存在，是委托的安全包裹
-事件是一种特殊的变量类型
+事件是一种特殊的变量类型，只能作为成员存在于类、接口以及结构体中
+事件不能在**类外部** **赋值、调用**
 
-事件不能在类外部 赋值、调用
+作用
+1. 防止外部随意置空委托
+2. 防止外部随意调用委托
+3. 事件相当于对委托进行了一次封装 让其更加安全
+```
+class Test
+{
+    //委托成员变量 用于储存函数
+    public Action myFun;
+    //事件成员变量 用于储存函数
+    public event Action myEvent;
+
+    public Test()
+    {
+        //事件的使用和委托一模一样(内部)
+        myFun = TestFun;
+        myEvent = TestFun;
+        myEvent += TestFun1;
+        myEvent -= TestFun1;
+        //myEvent = null;
+        myEvent();
+    }
+    
+    public void TestFun()
+    {
+    
+    }
+}
+
+//事件不能在外部赋值、调用（外部）
+Test t = new Test();
+t.myEvent = TestFun;   //报错
+t.myEvent += TestFun;   //可以 += 、 -+   不能 =
+t.myEvent -= TestFun;
+
+t.myEvent();   //调用报错
+//只能在类内部封装一个自定义函数来调用
+t.DoEvent();
+```
+
+#### 匿名函数delegate
+概念
+没有名字的函数，匿名函数主要是配合委托和事件使用的
+
+作用
+函数中传递参数
+委托或事件赋值
+主要是委托传递和存储时使用
+
+```
+//无参无返回值
+Action a = delegate()
+{
+};
+a();
+
+//有参
+Action<int, string> a = delegate(int i , string s)
+{
+};
+a(10, "10");
+
+//有返回值
+Func<string> a = delegate()
+{
+    return "100";
+};
+string s = a();
+```
+```
+//一般情况下会作为函数参数传递 或者 作为函数返回值
+
+class Test
+{
+    public Action action;
+
+    //参数传递
+    public void Dosomething(int i, Action fun)
+    {
+        Console.WriteLine(i);
+        fun();
+    }
+
+    //返回值
+    public Action GetFun()
+    {
+        return delegate()   //不需要先声明一个函数，再做为返回值返回
+        {
+            Console.WriteLine("返回的匿名函数");
+        };
+    }
+}
 ```
 
 ```
+ //参数传递
+Test t = new Test();
+t.Dosomething(100, delegate()   //不需要先声明一个函数，再做为参数传递
+{
+    Console.WriteLine("参数传递的匿名函数");
+});
 
+//返回值
+Action ac = t.GetFun();
+ac();
+//一步到位直接调用返回的委托函数
+t.GetFun()()
+```
 
+**匿名函数的缺点**
+添加到委托或事件容器中后 不记录 无法单独移除，只能清空。
 
-
-#### 匿名函数
 
 #### Lambad表达式
+概念
+可以将lambad表达式 理解为匿名函数的简写
 
+```
+//无参无返回值
+Action a = () =>
+{
+};
+a();
 
+//有参
+Action<int, string> a = (int i , s) =>   //参数类型可省略
+{
+};
+a(10, "10");
 
+//有返回值
+Func<string> a = () =>
+{
+    return "100";
+};
+string s = a();
+```
 
+**闭包**
+内层的函数可以引用包含在它外层的函数变量，即使外层函数的执行已经终止
 
+注意
+该变量提供的值并非变量创建时的值，而是在父函数范围内的最终值
 
+```
+class Test
+{
+    public event Action action;
+
+    public Test()
+    {
+        int value = 10;
+        value = 20;
+    
+        action = ()
+        {
+            Console.WriteLine(value);   //由于函数使用了外部变量形成了闭包；value不会被释放
+        };
+        value = 30;   //value为最终值
+    }
+}
+```
 
 ### 多线程
+[操作系统]  -->  n个[进程]  -->  n个[线程]
 
+#### 进程
+进程Process 是计算机中程序关于某数据集合上的一次运动活动
+是系统进行资源分配和调度的基本单位，是操作系统结构的基础
+例如：打开一个应用程序就是在操作系统上开启了一个进程
+进程之间可以相互独立运行互不干扰；也可以相互访问、操作
+
+#### 线程
+操作系统能够进行运算调度的最小单位
+它被包含在进程之中，是进程中的实际运作单位
+一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程
+我们目前写的程序 都在主线程中
+
+简单理解
+线程就是代码从上往下运行的一条"管道"
+
+#### 多线程
+可以通过代码 开启新的线程
+可以同时运行代码的多条"管道"
+
+线程类 Thread
+```
+//需要引入System.Threading才能使用
+using System.Threading;
+
+//1、声明一个新的线程
+//注意：线程执行的代码，需要封装到一个函数中
+Thread t = new Thread(NewThreadLogic);
+
+static void NewThreadLogic()
+{
+    //新线程逻辑
+}
+
+//2、启动线程
+t.Start();
+
+//3、设置为后台线程
+//当前台线程结束的时候，整个程序就结束了，即使还有后台线程正在运行
+//后台线程不会防止应用程序的进程被终止掉
+//如果不设置后台线程 可能导致进程无法正常关闭（例如：前台线程中写了死循环）
+t.IsBackground = true;   //一般都设置为后台线程
+
+//4、关闭释放线程
+//如果开启的线程不是死循环 不用刻意去关闭它
+//死循环中添加bool标准
+bool isRunning = true;
+while (isRunning)
+{
+
+}
+//通过Abort关闭，.Net core版本中无法使用
+t.Abort();
+
+//5、线程休眠
+//单位：毫秒；在哪个线程执行就休眠哪个线程
+Thread.Sleep(1000)
+```
+
+#### *线程之间共享数据
+//多个线程使用的内存是共享的，都属于该应用程序（进程）
+//所以要注意 当多线程 同时操作同一片内存区域时可能会出问题（多个线程同时操作同一个内存数据）
+//可以通过加锁的形式避免问题
+
+//lock
+//当我们在多个线程中想要访问同样的内容 进行逻辑处理时
+//为了避免逻辑顺序执行的差错
+
+```
+lock(obj)   // 参数需要是引用数据类型
+{
+    //线程1的逻辑代码
+}
+
+lock(obj)
+{
+    //线程2的逻辑代码
+}
+
+```
+
+
+
+#### 多线程的意义
 
 
 ### 反射和特性
