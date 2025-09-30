@@ -1654,6 +1654,7 @@ lock(obj)
 
 作用：我们写的一个代码集合，最终会被编译为一个程序集供人使用
 例如：[.dll](库文件) 或者 [.exe](可执行文件)
+dll文件（库文件），可以看做一种代码仓库，它提供给使用者一些可以直接拿来用的变量、函数或类
 
 **元数据**
 元数据就是用来描述数据的数据
@@ -1670,8 +1671,8 @@ lock(obj)
 2. 程序运行时，实例化对象，操作对象
 3. 程序运行时创建新对象，用新对象执行任务
 
-**Type（类的信息类）**
-Type是反射功能的基础；是访问元数据的主要方式
+##### Type
+Type（类的信息类）是反射功能的基础；是访问元数据的主要方式
 作用
 使用 Type 的成员获取有关类型（构造函数、方法、字段、属性和类的事件）声明的信息
 
@@ -1704,6 +1705,7 @@ MemberInfo[] infos = t.GetMembers();
 //得到所有构造函数
 ConstructorInfo[] ctors = t.GetConstructors();
 //得到一个构造函数，并执行
+//需要用Type数组表示参数类型
 //无参
 ConstructorInfo info = t.GetConstructor(new Type[0]);  //Type[0]无参构造
 Test obj = info.Invoke(null) as Test;   //无参构造 没有参数 传入null
@@ -1714,20 +1716,71 @@ Test obj = info.Invoke( new Type[] {2, "111"} ) as Test;
 obj.i;   //2
 
 //得到所有成员变量
+FieldInfo[] fieldInfos = t.GetFields();
+//得到指定名称的成员变量
+FieldInfo infoI = t.GetField("i");
+//通过反射获取和设置对象的值
+Test test = new Test();   //程序集内部
+test.i = 10;   
+infoI.GetValue(test);   //不同程序集之间
+infoI.SetValue(test, 100);
+
+//得到所有成员方法
+Type strType = typeof(string);
+MethodInfo[] methods = strType.GetMethods();
+//得到单个成员方法
+MethodInfo method = strType.GetMethod("Substring", new Type[] { typeof(int), typeof(int) });
+//调用方法
+//注意：如果是静态方法 Invoke中的第一个参数传null即可
+string str = "Hello World";
+//arg1：执行方法的对象   arg2：
+object result = subStr.Invoke( str, new object[] {2, 3} );
 ```
 
+**其他**
+枚举--GetEnumName
+事件--GetEvent
+接口--GetInterface
+属性--GetProperty
 
+##### Activator
+用于快速实例化对象的类
+作用
+将Type对象快捷实例化为对象
 
+```
+Type t = typeof(Test);
+//无参构造
+Test testObj = Activator.GreateInstance(t) as Test;
 
+//有参构造
+Test testObj = Activator.GreateInstance(t, 100) as Test;
+```
 
+##### Assembly
+程序集类
+主要用来加载其它程序集（dll、exe）
 
+```
+//同一文件下的其它程序集
+Assembly a = Assembly.Load("程序集名称");
 
+//不在同一文件下的其它程序集
+Assembly b = Assembly.LoadFrom("包含程序集清单的文件名称或路径");
+Assembly c = Assembly.LoadFile("要加载的文件的完全限定路径");
 
+//使用其它程序集的方法
+Type[] types = b.GetTypes();
+Type type = b.GetType("文件名.类名");
 
-
+object obj = Activator.GreateInstance(type, 100);  //实例化
+MethodInfo methods = obj.GetMethod("move");   //获取方法
+move.Invoke(obj, null);   //调用方法
+```
 
 #### 特性
-
+特性是一种允许我们向程序集添加元数据的语言结构
+它们用于保存程序结构信息的某种特殊类型的类
 
 
 
