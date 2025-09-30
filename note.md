@@ -1670,12 +1670,58 @@ lock(obj)
 2. 程序运行时，实例化对象，操作对象
 3. 程序运行时创建新对象，用新对象执行任务
 
-Type（类的信息类）
-Type是反射功能的基础
+**Type（类的信息类）**
+Type是反射功能的基础；是访问元数据的主要方式
+作用
+使用 Type 的成员获取有关类型（构造函数、方法、字段、属性和类的事件）声明的信息
+
+获取Type
+```
+//1. 在object中的GetType() 可以获取对象的Type
+int i = 10;
+Type t = i.GetType();   //System.Int32;t中包含int类型的方法
+
+//2. 通过typeof关键字 传入类名 也可以得到对象的Type
+Type t = typeof(int);   //常用
+
+//3. 通过类的名字 也可以获取类型（类名必须包含命名空间 不然找不到）
+Type t = Type.GetType("System.Int32");   //不同程序集之间 常用
+```
+
+**得到类的程序集信息**
+```
+t.Assembly
+```
+
+```
+using System.Reflection;
+
+Type t = typeof(Test);
+
+//得到所有公共成员
+MemberInfo[] infos = t.GetMembers();
+
+//得到所有构造函数
+ConstructorInfo[] ctors = t.GetConstructors();
+//得到一个构造函数，并执行
+//无参
+ConstructorInfo info = t.GetConstructor(new Type[0]);  //Type[0]无参构造
+Test obj = info.Invoke(null) as Test;   //无参构造 没有参数 传入null
+obj.i;   //10
+//有参
+ConstructorInfo info = t.GetConstructor(new Type[] { typeof(int) });  //Type[] { typeof(int), typeof(string) }   参数1为int类型,参数2为string类型
+Test obj = info.Invoke( new Type[] {2, "111"} ) as Test;
+obj.i;   //2
+
+//得到所有成员变量
 ```
 
 
-```
+
+
+
+
+
 
 
 
