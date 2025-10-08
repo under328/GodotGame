@@ -1846,9 +1846,17 @@ using System;
 
 
 
-List排序
+#### List排序
 
-斜变逆变
+
+
+
+
+#### 斜变逆变
+
+
+
+
 
 #### 迭代器iterator
 迭代器iterator又称光标cursor，是程序设计的软件设计模式
@@ -1959,7 +1967,145 @@ class CustomList<T> : IEnumerable
 }
 ```
 
-特殊语法
+#### 特殊语法
+**var隐式类型（少用）**
+var是一种特殊的变量类型，可以用来表示容易的变量
+注意
+1. var不能作为类的成员 只能用于临时变量申明时（一般写在函数语句块中）
+2. var必须初始化
 
-排序进阶
+```
+var i = 5;
+var s = "123";
+var array = new int[] {1,2,3,4};
+var List = new List<int>();
+```
+
+**匿名类型（少用）**
+var变量可以声明自定义匿名类型
+```
+var v = new {name = "jack", age = 18};
+Console.WriteLine(v.name);
+```
+
+**设置对象初始值**
+申明对象时，可以通过直接写大括号的形式初始化公共成员变量和属性
+```
+Person p = new Person { name = "jack", age = 18 };
+Person p = new Person() { name = "jack", age = 18 };   //无参函数 ()可省略
+Person p = new Person(100) { name = "jack", age = 18 };
+```
+
+**设置集合初始值**
+申明集合对象时，也可以通过大括号直接初始化内部属性
+int[] array = new int[] {1,2,3};
+List<int> list = new List<int>() {1,2,3};   // ()可省略
+
+**可空类型**
+1. 值类型不能赋值为空
+int i = null;   //报错
+2. 声明是 在值类型后面加？ 可以赋值为空
+int? i = null;
+3. 判断是否为空
+if (i.HasValue)
+{
+    Console.WriteLine(i);
+}
+4. 安全获取可空类型的值
+int? i = null;
+如果为空 返回值类型的默认值
+Console.WriteLine(value.GetValueOrDefault());
+也可以指定一个默认值
+Console.WriteLine(value.GetValueOrDefault(100));
+
+//引用类型
+object o = null;
+o?.ToString();   //先判断o是否为空，再执行
+
+//委托
+Action a = null;
+//if (a != null)
+//{
+//    action();
+//}
+a?.Invoke();
+
+**空合并操作符**
+左边值 ？ 右边值
+如果左边值为null就返回右边值 否则返回左边值（可以为null的类型都可以使用）
+int? intV = null;
+int intI = intV ?? 100;
+
+**内插字符串**
+用$来构造字符串，让字符串中可以拼接变量
+string name = "jack";
+Console.WriteLine($"好好学习，{name}");
+
+**单句逻辑简略写法**
+一句代码时可省略{}
+//条件判断或循环
+if (true)
+    Console.WriteLine("123");
+
+//属性
+public string name
+{
+    get => "123";
+    set => sex = true;
+}
+
+//函数
+public int Add(int x, int y) => x + y;
+
+#### 值和引用类型
+值类型：   //栈
+无符号、有符号、浮点数、char、bool、enum、struct
+引用类型：   //堆
+string、数组、class、interface、委托
+
+**如何判断**
+F12进入类型内部查看
+是class就是引用类型，是struct就是值类型
+
+静态变量：全局性、唯一性
+
+**结构体继承接口**
+利用里氏替换原则，用接口容器装载结构体存在装箱拆箱
+```
+interface ITest
+{
+     int value
+    {
+        get;
+        set;
+    }
+}
+
+struct STest : ITest
+{
+    int i;
+    public int value
+    {
+            get
+        {
+            return i;
+        }
+        set
+        {
+            this.value = value;
+        }
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
 
