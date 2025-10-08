@@ -1847,15 +1847,16 @@ using System;
 
 
 #### List排序
+list.Sort();
+继承排序接口IComparable
+Sort()中传入委托函数
 
 
+#### 谐变逆变
+谐变out -> 子变父
+逆变in -> 父变子
 
-
-
-#### 斜变逆变
-
-
-
+只有泛型接口和泛型委托可以使用
 
 
 #### 迭代器iterator
