@@ -1850,7 +1850,114 @@ List排序
 
 斜变逆变
 
-迭代器
+#### 迭代器iterator
+迭代器iterator又称光标cursor，是程序设计的软件设计模式
+迭代器模式提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露其内部的标识
+
+迭代器是可以在容器对象（链表、数组）上遍历访问的接口，可以用foreach遍历的类
+
+**实现标准迭代器**
+关键接口：IEnumerator、IEnumerable
+
+```
+using System.Collections;
+
+class CustomList : IEnumerable, IEnumerator
+{
+    private int[] list;   //私有的
+    private int position = -1;   //光标位置默认-1
+
+    public CustomList()
+    {
+        list = new int[] {1,2,3,4,5,6,7,8};
+    }
+
+    //IEnumerable
+    public IEnumerator GetEnumerator()
+    {
+        Reset();   //重置
+        return this;
+    }
+    //IEnumerator
+    public object Current   //当前位置
+    {
+        get
+        {
+            return list[position];
+        }
+    }
+    public bool MoveNext()   //是否移动到下一位
+    {
+        ++position;
+        //判断是否溢出
+        return position < list.Length;
+    }
+    public void Reset()   //重置
+    {
+        position = -1;
+    }
+}
+```
+
+```
+CustomList list = new CustomList();
+//foreach本质
+//1.先获取in后面对象的IEnumerator，调用其GetEnumerator方法来获取
+//2.执行得到IEnumerator对象中的MoveNext方法
+//3.只要MoveNext方法返回值为true，就会得到Current，然后赋值给item
+foreach (int item in list)
+{
+    Console.WriteLine(item);
+}
+```
+
+**yield return 语法糖实现迭代器**
+关键接口：IEnumerable
+让迭代器实现接口中的GetEnumerator方法即可
+
+```
+class CustomList : IEnumerable
+{
+    private int[] list;
+
+    public CustomList()
+    {
+        list = new int[] {1,2,3,4,5,6,7,8};
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        for (int i = 0); i < list.Length; i++
+        {
+            //yield关键字配合迭代器使用，可以理解为暂时返回保留当前的状态
+            yield return list[i];
+        }
+    }
+}
+```
+
+**yield return 语法糖实现泛型类迭代器**
+
+```
+class CustomList<T> : IEnumerable
+{
+    private T[] array;
+
+    public CustomList(params T[] array)
+    {
+        this.array = array;
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        for (int i = 0); i < array.Length; i++
+        {
+            //yield关键字配合迭代器使用，可以理解为暂时返回保留当前的状态
+            yield return array[i];
+        }
+    }
+}
+```
 
 特殊语法
 
