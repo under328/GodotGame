@@ -40,28 +40,118 @@ strList.Clear();   //清空元素
 ```
 interface IListDS<T>
 {
-int GetLength();
-void Clear();
-bool IsEmpty();
-void Add(T item);
-void Insert(T item, int index);
-T Delete(int index);
-T this[int index] {get;}
-T GetEle(int index);
-int Locate(T value);
+    int GetLength();
+    void Clear();
+    bool IsEmpty();
+    void Add(T item);
+    void Insert(T item, int index);
+    T Delete(int index);
+    T this[int index] {get;}
+    T GetEle(int index);
+    int Locate(T value);
 }
 ```
 顺序表SeqList
 ```
 class SeqList<T> : IListDS<T>
 {
-public int GetLength()
-{
-
+    private T[] data;   //用来存储数据
+    private int count = 0;   //表示存储了多少数据
+    
+    public SeqList(int size)   //size就是最大容量，该实现未提供最大[扩容方案]
+    {
+        data = new T[size];
+    }
+    public SeqList():this(10)   //默认构造函数 容量为10
+    {
+    
+    }
+    
+    public int GetLength()
+    {
+        return count;
+    }
+    
+    public void Clear()   //这里将count赋值为0，就无法取出数据，相当于清空；重新添加也会从0开始赋值、取出
+    {
+        count = 0;
+    }
+    
+    public bool IsEmpty()
+    {
+        return count == 0;
+    }
+    
+    public void Add(T item)
+    {
+        if ( count == data.Length)   //当前数组已经存满
+        {
+            ConsoleWriteLine("当前顺序表已存满，不允许再存入");
+        }
+        else
+        {
+            data[count] = item;
+            count++;
+        }
+    }
+    
+    public void Insert(T item, int index)
+    {
+        if ( count == data.Length)   //当前数组已经存满
+            {
+                ConsoleWriteLine("当前顺序表已存满，不允许再存入");
+            }
+        else
+        {
+            for (int i = count - 1; i >= index; i--)   //从前往后遍历数据会被覆盖，需要从后往前遍历
+            {
+                data[i + 1] = data[i]
+            }
+            data[index] = item;
+            count++;
+        }
+    }
+    
+    public T Delete(int index)
+    {
+        for (int i = index + 1; i < count; i++)
+        {
+            data[i - 1] = data[i]
+        }
+        count--;
+        return data[index];
+    }
+    
+    public T this[int index]
+    {
+        get { return GetEle(index); }
+    }
+    
+    public T GetEle(int index)
+    {
+        if( index >= 0 && index <= count - 1)
+        {
+            return data[index];
+        }
+        else
+        {
+            ConsoleWriteLine("索引不存在");
+            return default(T);   //返回默认值
+        }
+    }
+    
+    public int Locate(T value)   //获取索引
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (data[i].Equals(value) )
+            {
+                return i;
+            }
+        }
+        return -1;   //不存在返回-1
+    }
 }
-
-}
-
 ```
 
 
