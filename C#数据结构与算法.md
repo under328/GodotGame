@@ -11,11 +11,7 @@
 堆（Heap）：堆是一种特殊的树形数据结构，一般讨论的堆都是二叉堆。  
 散列表（Hash table）：散列表源自于散列函数(Hash function)，其思想是如果在结构中存在关键字和T相等的记录，那么必定在F(T)的存储位置可以找到该记录，这样就可以不用进行比较操作而直接取得所查记录。  
 
-#### 线性表List<T>
-顺序表[数组]（用内存地址连续的空间依次存放数据元素）
-单链表
-  双链表
-  循环表
+#### 线性表
 **List<T>常用方法**
 
 ```
@@ -36,7 +32,7 @@ strList.Sort();   //排序
 strList.Clear();   //清空元素
 ```
 
-**自定义List<T>**
+**线性表接口定义**
 ```
 interface IListDS<T>
 {
@@ -51,7 +47,10 @@ interface IListDS<T>
     int Locate(T value);
 }
 ```
-顺序表SeqList
+#### 顺序表SeqList
+顺序表是用地址连续的存储单元顺序存储线性表中的各个数据元素
+优点：查找任何位置上的数据元素都非常方便
+缺点：插入和删除时，需要通过移动数据元素来实现，影响运行效率
 ```
 class SeqList<T> : IListDS<T>
 {
@@ -155,11 +154,201 @@ class SeqList<T> : IListDS<T>
 ```
 
 
-#### 单链表
+#### 链表 Linked Storage
+链表是一组任意的存储单元来存储线性表中的数据元素（不要求逻辑上相邻的数据元素在物理存储位置是也相邻）
+优点：进行插入和删除时不需要移动数据元素
+缺点：失去了顺序表可以随机存取数据元素的优点
+
+##### 单链表 Singly Linked List
+node（data、next）
+
+**单链表节点定义**
+```
+class Node<T>
+{
+    private T data;   //存储数据
+    private Node<T> next;   //指针用来指向下一个元素
+    
+    public Node()   //无参构造函数，返回默认值
+    {
+        data = default(T);
+        next = null;
+    }
+    public Node(T value)
+    {
+        data = value;
+        next = null;
+    }
+    public Node(Node<T> next)
+    {
+        this.next = next;
+    }
+    public Node(T value, Node<T> next)
+    {
+        data = value;
+        this.next = next;
+    }
+    
+    public T Data
+    {
+        get { return data; }
+        set { data = value; }
+    }
+    public Node<T> Next
+    {
+        get { return next; }
+        set { next = value; }
+    }
+}
+```
+
+**单链表实现**
+```
+class LinkList<T> : IListDS<T>
+{
+    private Node<T> head;   //存储一个头节点
+    
+    public  LinkList()
+    {
+      head = null;
+    }
+
+    public int GetLength()
+    {
+        if(head == null) return 0;
+        Node<T> temp = head;
+        int count = 1;
+        while(true)
+        {
+            if (temp.Next != null)
+            {
+            count++;
+            temp = temp.Next;
+            }
+            else break;
+        }
+        return count;
+    }
+    
+    public void Clear()
+    {
+        head = null;
+    }
+    
+    public bool IsEmpty()
+    {
+        return head == null;
+    }
+    
+    public void Add(T item)
+    {
+        Node<T> newNode = new Node<T>(item);   //创建新节点
+        if ( head == null)   //头节点为空，那么新节点就是头节点
+        {
+            head = newNode;
+        }
+        else   //将新节点放到链表的尾部
+        {
+            Node<T> temp = head;
+            while (true)
+            {
+                if(temp.Next != null)
+                {
+                    temp = temp.Next;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            temp.Next = newNode;
+        }
+    }
+    
+    public void Insert(T item, int index)
+    {
+        Node<T> newNode = new Node<T>(item);
+        if ( index == 0)   //插入到头节点
+        {
+            newNode.Next = head;
+            head = newNode;
+        }
+        else
+        {
+            Node<T> temp = head;
+            for (int i = 0; i < index; i++)
+            {
+                temp = temp.Next;
+            }
+            newNode.Next = temp.Next;
+            temp.Next = newNode;
+        }
+    }
+    
+    public T Delete(int index)
+    {
+        T data = default(T);
+        if ( index == 0)   //删除头节点
+        {
+            data = head.Data;
+            head = head.Next;
+        }
+        else
+        {
+            Node<T> temp = head;
+            for (int i = 0; i < index; i++)
+            {
+                temp = temp.Next;
+            }
+            data = temp.Next.Data;
+            temp.Next = temp.Next.Next;
+        }
+        return data;
+    }
+    
+    public T this[int index]
+    {
+        get
+        {
+            Node<T> temp = head;
+            for (int i = 0; i <= index; i++)
+            {
+                temp = temp.Next;
+            }
+            return temp.Data
+        }
+    }
+    
+    public T GetEle(int index)
+    {
+        return this[index];
+    }
+    
+    public int Locate(T value)   //获取索引
+    {
+        Node<T> temp = head;
+        if(temp == null) return -1;   //不存在返回-1
+        else
+        {
+            int index = 0
+            while(true)
+            {
+                if (temp.Data.Equals(value)) return index;
+                else
+                {
+                    if(temp.Next != null) temp = temp.Next;
+                    else break;
+                }
+            }
+        }
+        return -1;
+    }
+}
+```
 
 
+**双链表**
 
-#### 双链表
 
 
 
