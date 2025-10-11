@@ -346,10 +346,36 @@ class LinkList<T> : IListDS<T>
 }
 ```
 
+##### 双链表
+node（prev、data、next）
 
-**双链表**
+**双链表节点定义**
+```
+public class DbNode<T>
+{
+    private T data;   //数据域
+    private DbNode<T> prev;   //前驱引用域
+    private DbNode<T> next;   //后继引用域
 
+    //构造器
+    public DbNode(T val, DbNode<T> p)
+    {
+        data = val;
+        next = p;
+    }
+    public DbNode(DbNode<T> p)
+    {
+        next = p;
+    }
+    public DbNode(T val)
+    {
+        data = val;
+        next = null;
+    }
+}
+```
 
+##### 循环链表
 
 
 #### 栈
